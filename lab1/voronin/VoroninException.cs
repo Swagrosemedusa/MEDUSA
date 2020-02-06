@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lab1
+namespace voronin
 {
-    class Program
+    class VoroninException : Exception
     {
-        static void Main(string[] args)
+        public VoroninException(string message)
+            : base(message)
         {
-			
         }
     }
 }
