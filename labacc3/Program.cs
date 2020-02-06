@@ -1,16 +1,25 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lab1
+namespace voronin
 {
     class Program
     {
         static void Main(string[] args)
         {
-			double a = 0, b = 0, c = 0;
+            string path = @"..\..\..\version";
+            Directory.CreateDirectory("Log");
+            using (StreamReader sr = new StreamReader(path))
+            {
+
+                MyLog.log("Версия_программы: " + sr.ReadToEnd().Trim('\n'));
+            }
+            double a = 0, b = 0, c = 0;
             Console.WriteLine("Введите 3 параметра a, b и с");
             a = Convert.ToDouble(Console.ReadLine());
             b = Convert.ToDouble(Console.ReadLine());

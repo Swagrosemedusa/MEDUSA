@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,22 @@ namespace voronin
             Instance()._write();
         }
 
-         public override void _write()
-         {
-            for(int i=0;i<_log.Count;i++)
+        override public void _write()
+        {
+            string date = DateTime.Now.ToString("dd.MM.yyyy_HH_mm_ss");
+            for (int i = 0; i < _log.Count; i++)
             {
                 Console.WriteLine(_log[i]);
+            }
+            string datename = @"Log\" + date + ".log";
+
+
+            using (StreamWriter sw = new StreamWriter(datename, false, System.Text.Encoding.Default))
+            {
+                for (int i = 0; i < _log.Count; i++)
+                {
+                    sw.WriteLine(_log[i]);
+                }
             }
         }
     }
