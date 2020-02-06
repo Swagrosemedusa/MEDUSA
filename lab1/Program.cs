@@ -6,36 +6,83 @@ using System.Threading.Tasks;
 
 namespace lab1
 {
+   class MyException : Exception
+    {
+        public MyException(string message) : base(message)
+        {
+
+        }
+    }
     class A
     {
-
-    }
-    class B
-    {
-        object a1;
-        object a2;
-        public B(object a1, object a2)
-        {
-            this.a1 = a1;
-            this.a2 = a2;
-        }
-    }
-    class C : B
-    {
-        object b1;
-
-        public C(object a1, object a2, object b1) 
-            : base(a1, a2)
+        protected double x;
         
+        public double calcLinEquation(double a, double b)
         {
-            this.b1 = b1;
+            if (a != 0)
+            {
+                return x = -b / a;
+            }
+            throw new MyException("Уравнение не существует");
         }
     }
+    class B : A
+    {
+        protected double c;
+        protected List<double> myList = new List<double>();
+
+
+        protected double des(double a, double b, double c)
+        {
+            return b * b - 4 * a * c;
+        }
+        public List<double> solve(double a, double b, double c)
+        {
+            if (a == 0)
+            {
+                double x = this.calcLinEquation(b, c);
+                myList.Add(x);
+                return myList;
+            }
+            
+            double des = this.des(a, b, c);
+            //Корень один
+            if (des == 0)
+            {
+                myList.Add((-b + Math.Sqrt(des)) / 2 * a);
+                return myList;
+            }
+            //два корня
+            if (des > 0)
+            {
+                myList.Add((-1 * b + Math.Sqrt(des)) / (2 * a));
+                myList.Add((-1 * b - Math.Sqrt(des)) / (2 * a));
+                return myList;
+            }
+            throw new MyException("Нет решений");
+        }
+
+    }
+    
     class Program
     {
         static void Main(string[] args)
         {
-            new C(new A(), new A(), new B(new A(), new A()));
+            List<double> res ;
+            try
+            {
+                B calc = new B();
+                res = calc.solve(1,6,5);
+                foreach(double temp in res)
+                {
+                    Console.WriteLine(temp);
+                }    
+            }
+            catch (MyException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            Console.ReadKey();
         }
     }
 }
